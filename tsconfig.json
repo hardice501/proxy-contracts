@@ -1,0 +1,14 @@
+{
+  "compilerOptions": {
+    "lib": ["es2023"],
+    "target": "ESNext",
+    "strict": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "skipLibCheck": true,
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "dist",
+  }
+}

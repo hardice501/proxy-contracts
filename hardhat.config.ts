@@ -1,0 +1,51 @@
+import type { HardhatUserConfig } from "hardhat/config";
+
+import hardhatToolboxMochaEthersPlugin from "@nomicfoundation/hardhat-toolbox-mocha-ethers";
+import hardhatIgnitionPlugin from "@nomicfoundation/hardhat-ignition";
+import { configVariable } from "hardhat/config";
+
+const config: HardhatUserConfig = {
+  plugins: [hardhatToolboxMochaEthersPlugin, hardhatIgnitionPlugin],
+  solidity: {
+    npmFilesToBuild: [
+      "@openzeppelin/contracts/proxy/transparent/ProxyAdmin.sol",
+      "@openzeppelin/contracts/proxy/ERC1967/ERC1967Proxy.sol",
+      "@openzeppelin/contracts/proxy/beacon/BeaconProxy.sol",
+      "@openzeppelin/contracts/proxy/beacon/UpgradeableBeacon.sol",
+      "@openzeppelin/contracts/proxy/beacon/IBeacon.sol",
+      "@openzeppelin/contracts/proxy/transparent/TransparentUpgradeableProxy.sol"
+    ],
+    profiles: {
+      default: {
+        version: "0.8.28",
+      },
+      production: {
+        version: "0.8.28",
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 200,
+          },
+        },
+      },
+    },
+  },
+  networks: {
+    hardhatMainnet: {
+      type: "edr-simulated",
+      chainType: "l1",
+    },
+    hardhatOp: {
+      type: "edr-simulated",
+      chainType: "op",
+    },
+    sepolia: {
+      type: "http",
+      chainType: "l1",
+      url: configVariable("SEPOLIA_RPC_URL"),
+      accounts: [configVariable("SEPOLIA_PRIVATE_KEY")],
+    },
+  },
+};
+
+export default config;
